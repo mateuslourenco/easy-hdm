@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ super() }} - Wi-Fi {% endblock %}
+{% set active_page = "wifi" %}
 
 {% block content %}
 <h1 class="text-center">Wi-Fi</h1>
@@ -58,6 +59,9 @@
                 <input type="number" id="canal" min="1" max="12" placeholder="Canal" disabled class="um-sete-dois">
                 <input type="button" class="btn btn-primary" onclick="createJSON()" value="Gerar">
             </div>
+        </fieldset>
+        <fieldset class="border p-2 mb-1">
+            <legend>Resultado</legend>
             <div id="resultado">
                 <div id="doisQuPontoatro">
                     <input type="text" id="result2" readonly="readonly">
