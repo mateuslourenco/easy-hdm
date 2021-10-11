@@ -4,7 +4,6 @@ function createInputSSID5G(parent) {
         id: "ssid5",
         placeholder: "SSID 5.0GHz",
         type: "text",
-        class: "um-sete-dois",
     });
     let isSSID = document.querySelector(".opt-ssid").checked;
     if(!isSSID) {
@@ -18,7 +17,6 @@ function createInputPassword5G(parent) {
         id: "password5",
         placeholder: "Password 5.0GHz",
         type: "text",
-        class: "um-sete-dois",
     });
     let isPW = document.querySelector(".opt-pw").checked;
     if(!isPW) {
@@ -140,6 +138,13 @@ function checkCH(ch) {
     }
 }
 function createJSON() {
+    let opcoes = document.querySelectorAll('[name="opcoes"]');
+    // opcoes.forEach(
+    // function(valor){
+    //     if (valor.checked) {
+    //         console.log(valor.value)
+    //     }
+    // });
 
     let isOnly2 = document.querySelector("#somente-dois-ponto-quatro").checked;
     let isOnly5 = document.querySelector("#somente-cinco-ponto-zero").checked;
@@ -175,18 +180,61 @@ function createJSON() {
 
     if(chkSSID !== false && chkPW !== false) {
 
-        const createWifi2 = (ssid1, password1) => JSON.stringify({ index: "1", ssid: ssid1, password: password1 });
-        const createWifi2CH = (ssid1, password1, ch) => JSON.stringify({ index: "1", ssid: ssid1, password: password1, channel: ch});
-        const createWifi5 = (ssid1, password1) => JSON.stringify({ index: "5", ssid: `${ssid1}-5G`, password: password1 });
-        const createOnly5 = (ssid1, password1) => JSON.stringify({ index: "5", ssid: ssid1, password: password1 });
-        const createSSID2 = (ssid1) => JSON.stringify({ index: "1", ssid: ssid1});
-        const createSSID2CH = (ssid1, ch) => JSON.stringify({ index: "1", ssid: ssid1, channel: ch});
-        const createSSID5 = (ssid1) => JSON.stringify({ index: "5", ssid: `${ssid1}-5G`});
-        const createOnlySSID5 = (ssid1) => JSON.stringify({ index: "5", ssid: ssid1});
-        const createPW2 = (password1) => JSON.stringify({ index: "1", password: password1 });
-        const createPW2CH = (password1, ch) => JSON.stringify({ index: "1", password: password1, channel: ch });
-        const createPW5 = (password1) => JSON.stringify({ index: "5", password: password1 });
-        const createCH = (ch) => JSON.stringify({ index: "1", channel: ch });
+        const createWifi2 = (ssid1, password1) => JSON.stringify({
+                                                    index: "1", 
+                                                    ssid: ssid1,
+                                                    password: password1
+                                                });
+        const createWifi2CH = (ssid1, password1, ch) => JSON.stringify({
+                                                            index: "1",
+                                                            ssid: ssid1,
+                                                            password: password1,
+                                                            channel: ch
+                                                        });
+        const createWifi5 = (ssid1, password1) => JSON.stringify({
+                                                    index: "5",
+                                                    ssid: `${ssid1}-5G`,
+                                                    password: password1
+                                                });
+        const createOnly5 = (ssid1, password1) => JSON.stringify({
+                                                    index: "5",
+                                                    ssid: ssid1,
+                                                    password: password1
+                                                });
+        const createSSID2 = (ssid1) => JSON.stringify({
+                                        index: "1",
+                                        ssid: ssid1
+                                    });
+        const createSSID2CH = (ssid1, ch) => JSON.stringify({
+                                                index: "1",
+                                                ssid: ssid1,
+                                                channel: ch
+                                            });
+        const createSSID5 = (ssid1) => JSON.stringify({
+                                            index: "5",
+                                            ssid: `${ssid1}-5G`
+                                        });
+        const createOnlySSID5 = (ssid1) => JSON.stringify({
+                                                index: "5",
+                                                ssid: ssid1
+                                            });
+        const createPW2 = (password1) => JSON.stringify({
+                                            index: "1",
+                                            password: password1
+                                        });
+        const createPW2CH = (password1, ch) => JSON.stringify({
+                                            index: "1",
+                                            password: password1,
+                                            channel: ch
+                                        });
+        const createPW5 = (password1) => JSON.stringify({
+                                            index: "5",
+                                            password: password1
+                                        });
+        const createCH = (ch) => JSON.stringify({
+                                    index: "1",
+                                    channel: ch
+                                });
         let result;
         if (isOnly2) {
             if(isCH && chkCH !== false){
@@ -507,7 +555,7 @@ function regraDePortas(){
             alert("Selecione ao menos um protocolo!");
         }
     } else {
-        alert("Informe todas as opções de rede!")
+        alert("Informe todas as opções da regra!")
     }
     if (result != undefined) {
         document.querySelector("#result-port").value = result
