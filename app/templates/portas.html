@@ -19,15 +19,24 @@
     </div>
 </fieldset>
 <fieldset class="border p-2 mb-1">
-    <legend>Informações da rede</legend>
+    <legend>Informações da regra</legend>
     <div>
-        <input type="text" class="um-sete-dois porta" id="port-name" placeholder="Nome da regra">
-    </div>
-        <input type="text" class="mb-1 um-sete-dois porta" id="ip-interno" placeholder="IP Interno">
-        <input type="text" class="mb-1 um-sete-dois porta" id="porta-interna" placeholder="Porta interna">
-        <input type="text" class="mb-1 um-sete-dois porta" id="porta-externa" placeholder="Porta externa">
-        <button type="button" class="btn btn-primary mb-1" id="create" onclick="regraDePortas()">Gerar</button>
+        <div>
+            <input class="porta" type="text" id="port-name" placeholder="Nome da regra">
+        </div>
+        <div>
+            <input class="porta" type="text" id="ip-interno" placeholder="IP Interno">
+        </div>
+        <div>
+            <input class="porta" type="text" id="porta-interna" placeholder="Porta interna">
+        </div>
+        <div>
+            <input class="porta" type="text" id="porta-externa" placeholder="Porta externa">
+            <button type="button" class="btn btn-primary" id="create" onclick="regraDePortas()">Gerar</button>
+        </div>
 
+
+    </div>
 </fieldset>
 <fieldset class="border p-2 mb-1">
     <legend>Resultado</legend>
