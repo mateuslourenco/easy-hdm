@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }} - Wi-Fi {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Wi-Fi</h1>
+<form method="POST" action="/redes" onchange="checkIsOther5G()">
+    <fieldset class="border p-2 mb-1">
+            <legend>Redes</legend>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="padrao" value="padrao" checked>
+                <label class="form-check-label" for="padrao">
+                    Padrão <span class="fst-italic fw-lighter">(Será inserido os caracteres -5G ao final do SSID da rede 5.0GHz)</span>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="somente-dois-ponto-quatro" value="somente-dois-ponto-quatro">
+                <label class="form-check-label" for="somente-dois-ponto-quatro">
+                    Somente rede 2.4GHz
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="somente-cinco-ponto-zero" value="somente-cinco-ponto-zero">
+                <label class="form-check-label" for="somente-cinco-ponto-zero">
+                    Somente rede 5.0GHz
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input other5" type="radio" name="flexRadioDefault" id="redes-diferentes" value="redes-diferentes">
+                <label class="form-check-label" for="redes-diferentes">
+                    Redes 2.4GHz e 5.0GHz com SSID's e/ou senhas diferentes
+                </label>
+            </div>
+    </fieldset>
+    <fieldset class="border p-2 mb-1">
+            <legend>Opções</legend>
+            <div class="form-check">
+                <input class="form-check-input opt-ssid" type="checkbox" id="defaultCheck1" name="opcoes" checked onclick="checkOPT()" value="ssid">
+                <label class="form-check-label" for="defaultCheck1">
+                    SSID
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input opt-pw" type="checkbox" id="defaultCheck2" name="opcoes" checked onclick="checkOPT()" value="senha">
+                <label class="form-check-label" for="defaultCheck2">
+                    Password
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input opt-canal" type="checkbox" id="defaultCheck3" name="opcoes" onclick="checkOPT()" value="canal">
+                <label class="form-check-label" for="defaultCheck3">
+                    Canal 2.4GHz
+                </label>
+            </div>
+            <div id="gerador">
+                <input type="text" id="ssid" placeholder="SSID">
+                <input type="text" class="mb-1 um-sete-dois" id="password" placeholder="Password">
+                <input type="number" id="canal" min="1" max="12" placeholder="Canal" disabled class="um-sete-dois">
+                <input type="button" class="btn btn-primary" onclick="createJSON()" value="Gerar">
+            </div>
+            <div id="resultado">
+                <div id="doisQuPontoatro">
+                    <input type="text" id="result2" readonly="readonly">
+                    <button type="button" class="btn btn-primary" onclick="copy('result2')" id="btn-result2" disabled="disabled">Copiar 2.4GHz</button>
+                </div>
+                <div id="cincoPontoZero">
+                    <input type="text" id="result5" readonly="readonly">
+                    <button type="button" class="btn btn-primary" onclick="copy('result5')" id="btn-result5" disabled="disabled">Copiar 5.0GHz</button>
+                </div>
+            </div>
+        </fieldset>
+</form>
+{% endblock %}

@@ -1,0 +1,46 @@
+* {
+ margin-bottom: 5px;
+}
+body {
+ max-width: 100%;
+ margin: auto;
+}
+main {
+ padding: 10px;
+ height: auto;
+}
+input[type=text], input[type=number] {
+ width: 172.98px;
+ height: 30px;
+ border-radius: 20px;
+ border: 1px solid black;
+ text-align: center;
+}
+#gerador {
+ display: flex;
+ flex-wrap: wrap;
+}
+
+#gerador input {
+ margin-right: 5px;
+}
+#resultado input {
+ width: calc(100% - 130px);
+}
+.btn {
+ width: 120px;
+ height: 30px;
+ border-radius: 20px;
+ padding: 0;
+}
+.um-sete-dois {
+ width: 172.98px;
+}
+.btn:disabled {
+ cursor: not-allowed;
+ pointer-events: all !important;
+}
+input[type=text]:disabled, input[type=number]:disabled{
+ cursor: not-allowed;
+ background-color: rgb(231, 230, 230);
+}

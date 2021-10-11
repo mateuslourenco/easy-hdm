@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}{{ super() }} - SIP {% endblock %}
+{% block content %}
+<h1 class="text-center">SIP</h1>
+<fieldset class="border p-2 mb-1" onchange="checkOptSIP()">
+    <legend>Ação</legend>
+    <div class="form-check">
+        <input class="form-check-input set-voip" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Set VoIP
+        </label>
+    </div>
+    <div class="form-check ">
+        <input class="form-check-input only2" type="radio" name="flexRadioDefault" id="flexRadioDefault2"">
+        <label class="form-check-label" for="flexRadioDefault2">
+            Cancel VoIP
+        </label>
+    </div>
+</fieldset>
+<fieldset class="border p-2 mb-1">
+    <legend>Informações SIP</legend>
+    <span class="fst-italic fw-lighter">Copie e cole as Informações do Helper</span>
+    <div>
+        <input type="text" class="um-sete-dois" id="dir-numero"  placeholder="DirectoryNumber">
+        <input type="text" class="um-sete-dois opcoes-sip" id="user-name" placeholder="AuthUserName">
+        <input type="text" class="um-sete-dois opcoes-sip" id="auth-password" placeholder="AuthPassword">
+    </div>
+    <div>
+        <input type="text" class="um-sete-dois opcoes-sip" id="proxy-sv" placeholder="ProxyServer">
+        <input type="text" class="um-sete-dois opcoes-sip" id="registrar-sv" placeholder="RegistrarServer">
+        <input type="text" class="um-sete-dois opcoes-sip" id="user-agent" placeholder="UserAgentDomain">
+    </div>
+    <div>
+        <input type="text" class="um-sete-dois opcoes-sip" id="outbound-proxy" placeholder="OutboundProxy">
+        <input type="text" class="um-sete-dois opcoes-sip" id="phy-ref" placeholder="phyReferenceList">
+        <button type="button" class="btn btn-primary um-sete-dois mb-1" onclick="criarSIP()" id="create">Gerar</button>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+    <div id="resultado">
+        <div>
+            <input type="text" id="resultado-voip" readonly="readonly">
+            <button type="button" class="btn btn-primary" onclick="copy('resultado-voip')" id="btn-sip" disabled="disabled">Copiar</button>
+        </div>
+    </div>
+</fieldset>
+{% endblock %}

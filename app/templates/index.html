@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }} - Inicio{% endblock %}
+
+{% block content %}
+<div class="text-center home">
+    <figure>
+        <img src="{{url_for('static', filename='horizontal_on_white_by_logaster.png')}}" alt="logo">
+    </figure>
+</div>
+{% endblock %}
