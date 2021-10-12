@@ -5,7 +5,7 @@
 
 {% block content %}
 <h1 class="text-center">Wi-Fi</h1>
-<form method="POST" action="/redes" onchange="checkIsOther5G()">
+<form method="POST" action="/redes" onchange="(checkIsOther5G(), checkIsOnly5G())">
     <fieldset class="border p-2 mb-1">
             <legend>Redes</legend>
             <div class="form-check">
@@ -33,31 +33,49 @@
                 </label>
             </div>
     </fieldset>
-    <fieldset class="border p-2 mb-1">
+    <fieldset class="border p-2 mb-1" onchange="checkOPT()">
             <legend>Opções</legend>
             <div class="form-check">
-                <input class="form-check-input opt-ssid" type="checkbox" id="defaultCheck1" name="opcoes" checked onclick="checkOPT()" value="ssid">
+                <input class="form-check-input opt-ssid" type="checkbox" id="defaultCheck1" name="opcoes" checked value="ssid">
                 <label class="form-check-label" for="defaultCheck1">
                     SSID
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input opt-pw" type="checkbox" id="defaultCheck2" name="opcoes" checked onclick="checkOPT()" value="password">
+                <input class="form-check-input opt-pw" type="checkbox" id="defaultCheck2" name="opcoes" checked value="password">
                 <label class="form-check-label" for="defaultCheck2">
                     Password
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input opt-canal" type="checkbox" id="defaultCheck3" name="opcoes" onclick="checkOPT()" value="channel">
+                <input class="form-check-input opt-canal-dois" type="checkbox" id="defaultCheck3" name="opcoes" value="channel">
                 <label class="form-check-label" for="defaultCheck3">
                     Canal 2.4GHz
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input opt-canal-cinco" type="checkbox" id="defaultCheck4" name="opcoes" value="channel-cinco">
+                <label class="form-check-label" for="defaultCheck4">
+                    Canal 5.0GHz
                 </label>
             </div>
             <div id="gerador">
                 <input type="text" id="ssid" placeholder="SSID">
                 <input type="text" class="mb-1 um-sete-dois" id="password" placeholder="Password">
-                <input type="number" id="canal" min="1" max="12" placeholder="Canal" disabled class="um-sete-dois">
-                <input type="button" class="btn btn-primary" onclick="createJSON()" value="Gerar">
+                <select name="select" class="canal" id="canal-dois" disabled>
+                    <option value="" disabled selected>Canal 2.4GHz</option>
+                    {% for canal in canais_dois %}
+                        <option value="{{ canal }}">{{ canal }}</option>
+                    {% endfor %}
+                </select>
+                <select name="select" class="canal" id="canal-cinco" disabled>
+                    <option value="" disabled selected>Canal 5.0GHz</option>
+                    {% for canal in canais_cinco %}
+                        <option value="{{ canal }}">{{ canal }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="button" class="btn btn-primary btn-gerar" onclick="createJSON()" value="Gerar">
             </div>
         </fieldset>
         <fieldset class="border p-2 mb-1">

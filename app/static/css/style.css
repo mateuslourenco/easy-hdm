@@ -9,13 +9,15 @@ main {
  padding: 10px;
  height: auto;
 }
-input[type=text], input[type=number] {
+input[type=text], input[type=number], .canal {
  width: 172.98px;
  height: 30px;
  border-radius: 5px;
  border: 1px solid black;
  text-align: center;
+ padding: 0;
 }
+
 #gerador {
  display: flex;
  flex-wrap: wrap;
@@ -38,10 +40,13 @@ input[type=text], input[type=number] {
  cursor: not-allowed;
  pointer-events: all !important;
 }
-input[type=text]:disabled, input[type=number]:disabled{
+input[type=text]:disabled, input[type=number]:disabled, .canal:disabled {
  cursor: not-allowed;
  background-color: rgb(231, 230, 230);
 }
 .row {
  margin-left: 0px;
+}
+.btn-gerar {
+ margin-left: 5px;
 }
