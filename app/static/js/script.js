@@ -213,7 +213,8 @@ function createJSON() {
                                                     index: "5",
                                                     ssid: `${ssid1}-5G`,
                                                     password: password1,
-                                                    channel: ch
+                                                    channel: ch,
+                                                    AutoChannelEnable : "true"
                                                 });          
         const createOnly5 = (ssid1, password1) => JSON.stringify({
                                                     index: "5",
@@ -367,9 +368,13 @@ function createJSON() {
                     } else if (isSSID) {
                         result2 = createSSID2CH(ssid, ch2);
                         result5 = createOnly5(ssid5);
+                    } else if (isPW) {
+                        result2 = createPW2CH(password, ch2)
+                        result5 = createOnly5(ssid)
                     } else {
-                        result2 = createPW2CH(password, ch2);
-                        result5 = createPW5(pw5);
+                        result2 = createCH(ch2);
+                        document.getElementById("result2").setAttribute("value", result2);
+                        return;
                     }
                 } else if (isCH5) {
                     if (isSSID && isPW) {
@@ -378,9 +383,13 @@ function createJSON() {
                     } else if (isSSID) {
                         result2 = createSSID2(ssid);
                         result5 = createOnlySSID5CH(ssid5, ch5);
-                    } else {
+                    } else if(isPW) {
                         result2 = createPW2(password);
                         result5 = createPW5CH(pw5, ch5);
+                    } else {
+                        result5 = createCH5(ch5);
+                        document.getElementById("result5").setAttribute("value", result5);
+                        return;
                     }
                 } else {
                     if (isSSID && isPW) {
