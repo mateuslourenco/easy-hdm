@@ -1,4 +1,4 @@
-function createInputSSID5G(parent) {
+function createInputSSID5G(parent, child) {
     const ssid5 = document.createElement("input");
     Object.assign(ssid5, {
         id: "ssid5",
@@ -9,9 +9,9 @@ function createInputSSID5G(parent) {
     if(!isSSID) {
         ssid5.setAttribute("disabled", "disabled");
     }
-    parent.appendChild(ssid5);
+    parent.insertBefore(ssid5, child)
 }
-function createInputPassword5G(parent) {
+function createInputPassword5G(parent, child) {
     const pw5 = document.createElement("input");
     Object.assign(pw5, {
         id: "password5",
@@ -22,7 +22,7 @@ function createInputPassword5G(parent) {
     if(!isPW) {
         pw5.setAttribute("disabled", "disabled");
     }
-    parent.appendChild(pw5);
+    parent.insertBefore(pw5, child)
 }
 function removeInput5G(parent) {
     const ssid5 = document.getElementById("ssid5") || undefined;
@@ -37,40 +37,51 @@ function checkIsOther5G() {
     addDisabled();
     const checkBox = document.querySelector(".other5");
     const parent = document.getElementById("gerador");
+    const child = document.querySelector('#canal-cinco')
 
     if (checkBox.checked === true) {
         const check5G = document.getElementById("ssid5") || undefined;
         if (!check5G) {
-            createInputSSID5G(parent);
-            createInputPassword5G(parent);
+            createInputSSID5G(parent, child);
+            createInputPassword5G(parent, child);
 
         }
     } else {
         removeInput5G(parent);
     }
 }
-function checkIsOnly5G(){
-    let checkBoxOnly5G = document.querySelector(".only5");
-    let checkBoxCH = document.querySelector(".opt-canal");
-    let ch = document.getElementById("canal");
-    if (checkBoxOnly5G.checked === true) {
-        checkBoxCH.setAttribute("disabled", "disabled");
-        checkBoxCH.checked = false;
-        ch.value = "";
-        ch.setAttribute("disabled", "disabled");
-    } else {
-        checkBoxCH.removeAttribute("disabled");
+function checkIsOnly5GOr2G(){
+    let checkBoxOnly5G = document.querySelector("#somente-cinco-ponto-zero").checked
+    let checkBoxOnly2G = document.querySelector("#somente-dois-ponto-quatro").checked
+    let checkBoxCH2 = document.querySelector(".opt-canal-dois");
+    let checkBoxCH5 = document.querySelector(".opt-canal-cinco");
+    let ch2 = document.getElementById("canal-dois");
+    let ch5 = document.getElementById("canal-cinco");
+    if (checkBoxOnly5G === true) {
+        checkBoxCH2.setAttribute("disabled", "disabled");
+        checkBoxCH2.checked = false;
+        ch2.value = "";
+        ch2.setAttribute("disabled", "disabled");
+    } else if (checkBoxOnly2G === true) {
+        checkBoxCH5.setAttribute("disabled", "disabled");
+        checkBoxCH5.checked = false;
+        ch5.value = "";
+        ch5.setAttribute("disabled", "disabled");
     }
+    checkBoxCH2.removeAttribute("disabled");
+    checkBoxCH5.removeAttribute("disabled");
 }
 function checkOPT() {
     let isSSSID = document.querySelector(".opt-ssid").checked;
     let isPW = document.querySelector(".opt-pw").checked;
-    let isChannel = document.querySelector(".opt-canal").checked;
+    let isChannel = document.querySelector(".opt-canal-dois").checked;
+    let isChannel5 = document.querySelector(".opt-canal-cinco").checked;
     let inputSSID = document.querySelector("#ssid");
     let inputSSID5 = document.querySelector("#ssid5") || undefined;
     let inputPW = document.querySelector("#password");
     let inputPW5 = document.querySelector("#password5") || undefined;
-    let inputCH = document.querySelector("#canal") || undefined;
+    let inputCH2 = document.querySelector("#canal-dois") || undefined;
+    let inputCH5 = document.querySelector("#canal-cinco") || undefined;
     if(!isSSSID) {
         inputSSID.value = "";
         inputSSID.setAttribute("disabled", "disabled");
@@ -106,13 +117,22 @@ function checkOPT() {
         }
     }
     if(!isChannel) {
-        inputCH.value = "";
-        inputCH.setAttribute("disabled", "disabled");
+        inputCH2.value = "";
+        inputCH2.setAttribute("disabled", "disabled");
     } else {
-        if(inputCH.hasAttribute("disabled")) {
-            inputCH.removeAttribute("disabled");
+        if(inputCH2.hasAttribute("disabled")) {
+            inputCH2.removeAttribute("disabled");
+            inputCH2.value = 1
         }
-        inputCH.value = 1;
+    }
+    if(!isChannel5) {
+        inputCH5.value = "";
+        inputCH5.setAttribute("disabled", "disabled");
+    } else {
+        if(inputCH5.hasAttribute("disabled")) {
+            inputCH5.removeAttribute("disabled");
+            inputCH5.value = 36
+        }
     }
 }
 function checkSSID(ssid) {
@@ -138,23 +158,17 @@ function checkCH(ch) {
     }
 }
 function createJSON() {
-    let opcoes = document.querySelectorAll('[name="opcoes"]');
-    // opcoes.forEach(
-    // function(valor){
-    //     if (valor.checked) {
-    //         console.log(valor.value)
-    //     }
-    // });
-
     let isOnly2 = document.querySelector("#somente-dois-ponto-quatro").checked;
     let isOnly5 = document.querySelector("#somente-cinco-ponto-zero").checked;
     let isOther5 = document.querySelector("#redes-diferentes").checked || undefined;
     let isSSID = document.querySelector(".opt-ssid").checked;
-    let isCH = document.querySelector(".opt-canal").checked;
+    let isCH2 = document.querySelector(".opt-canal-dois").checked;
+    let isCH5 = document.querySelector(".opt-canal-cinco").checked;
     let isPW = document.querySelector(".opt-pw").checked;
-    let ssid = document.getElementById("ssid").value;
-    let password = document.getElementById("password").value;
-    let ch = document.getElementById("canal").value;
+    let ssid = document.querySelector("#ssid").value;
+    let password = document.querySelector("#password").value;
+    let ch2 = document.querySelector("#canal-dois").value;
+    let ch5 = document.querySelector('#canal-cinco').value
 
     let chkSSID = undefined;
     let chkPW = undefined;
@@ -171,8 +185,7 @@ function createJSON() {
         chkSSID = checkSSID(ssid);
     } else if(isPW) {
         chkPW = checkPW(password);
-    } else if(isCH){
-        chkCH = checkCH(ch);
+    } else if(isCH2 || isCH5) {
     } else {
         chkSSID = false;
         alert("Selecione no minimo uma opção");
@@ -196,10 +209,23 @@ function createJSON() {
                                                     ssid: `${ssid1}-5G`,
                                                     password: password1
                                                 });
+        const createWifi5CH = (ssid1, password1, ch) => JSON.stringify({
+                                                    index: "5",
+                                                    ssid: `${ssid1}-5G`,
+                                                    password: password1,
+                                                    channel: ch
+                                                });          
         const createOnly5 = (ssid1, password1) => JSON.stringify({
                                                     index: "5",
                                                     ssid: ssid1,
                                                     password: password1
+                                                });
+        const createOnly5CH = (ssid1, password1, ch) => JSON.stringify({
+                                                    index: "5",
+                                                    ssid: ssid1,
+                                                    password: password1,
+                                                    channel: ch,
+                                                    AutoChannelEnable : "true"
                                                 });
         const createSSID2 = (ssid1) => JSON.stringify({
                                         index: "1",
@@ -214,9 +240,21 @@ function createJSON() {
                                             index: "5",
                                             ssid: `${ssid1}-5G`
                                         });
+        const createSSID5CH = (ssid1, ch) => JSON.stringify({
+                                            index: "5",
+                                            ssid: `${ssid1}-5G`,
+                                            channel: ch,
+                                            AutoChannelEnable : "true"
+                                        });
         const createOnlySSID5 = (ssid1) => JSON.stringify({
                                                 index: "5",
                                                 ssid: ssid1
+                                            });
+        const createOnlySSID5CH = (ssid1, ch) => JSON.stringify({
+                                                index: "5",
+                                                ssid: ssid1,
+                                                channel: ch,
+                                                AutoChannelEnable : "true"
                                             });
         const createPW2 = (password1) => JSON.stringify({
                                             index: "1",
@@ -231,21 +269,32 @@ function createJSON() {
                                             index: "5",
                                             password: password1
                                         });
+        const createPW5CH = (password1, ch) => JSON.stringify({
+                                            index: "5",
+                                            password: password1,
+                                            channel: ch,
+                                            AutoChannelEnable : "true"
+                                        });
         const createCH = (ch) => JSON.stringify({
                                     index: "1",
                                     channel: ch
                                 });
+        const createCH5 = (ch) => JSON.stringify({
+                                    index: "5",
+                                    channel: ch,
+                                    AutoChannelEnable : "true"
+                                });
         let result;
         if (isOnly2) {
-            if(isCH && chkCH !== false){
+            if(isCH2 && chkCH !== false){
                 if (isSSID && isPW) {
-                result = createWifi2CH(ssid, password, ch);
+                result = createWifi2CH(ssid, password, ch2);
                 } else if (isSSID) {
-                    result = createSSID2CH(ssid, ch);
+                    result = createSSID2CH(ssid, ch2);
                 } else if (isPW){
-                    result = createPW2CH(password, ch);
+                    result = createPW2CH(password, ch2);
                } else {
-                    result = createCH(ch);
+                    result = createCH(ch2);
                }
             }
             else {
@@ -261,11 +310,25 @@ function createJSON() {
             document.getElementById("btn-result5").setAttribute("disabled", "disabled");
         } else if (isOnly5) {
             if (isSSID && isPW) {
-                result = createOnly5(ssid, password);
+                if (isCH5) {
+                    result = createOnly5CH(ssid, password, ch5)
+                } else {
+                    result = createOnly5(ssid, password);
+                }
             } else if (isSSID) {
-                result = createOnlySSID5(ssid);
+                if (isCH5) {
+                    result = createOnlySSID5CH(ssid, ch5);
+                } else {
+                    result = createOnlySSID5(ssid);
+                }
+            } else if (isPW) {
+                if (isCH5) {
+                    result = createPW5CH(password, ch5)
+                } else {
+                    result = createPW5(password);
+                }
             } else {
-                result = createPW5(password);
+                result = createCH5(ch5)
             }
             document.getElementById("result5").setAttribute("value", result);
             document.getElementById("btn-result2").setAttribute("disabled", "disabled");
@@ -279,20 +342,45 @@ function createJSON() {
                 chkPW = checkPW(pw5);
             } else if(isSSID) {
                 chkSSID = checkSSID(ssid5);
-            } else {
+            } else if(isPW) {
                 chkPW = checkPW(pw5);
             }
             if(chkSSID !== false && chkPW !== false){
-                if (isCH) {
+                if (isCH2 && isCH5) {
                     if (isSSID && isPW) {
-                        result2 = createWifi2CH(ssid, password, ch);
+                        result2 = createWifi2CH(ssid, password, ch2);
+                        result5 = createOnly5CH(ssid5, pw5, ch5);
+                    } else if (isSSID) {
+                        result2 = createSSID2CH(ssid, ch2);
+                        result5 = createOnlySSID5CH(ssid5, ch5);
+                    } else if (isPW) {
+                        result2 = createPW2CH(password, ch2);
+                        result5 = createPW5CH(pw5, ch5);
+                    } else {
+                        result2 = createCH(ch2);
+                        result5 = createCH5(ch5);
+                    }
+                } else if (isCH2) {
+                    if (isSSID && isPW) {
+                        result2 = createWifi2CH(ssid, password, ch2);
                         result5 = createOnly5(ssid5, pw5);
                     } else if (isSSID) {
-                        result2 = createSSID2CH(ssid, ch);
+                        result2 = createSSID2CH(ssid, ch2);
                         result5 = createOnly5(ssid5);
                     } else {
-                        result2 = createPW2CH(password, ch);
+                        result2 = createPW2CH(password, ch2);
                         result5 = createPW5(pw5);
+                    }
+                } else if (isCH5) {
+                    if (isSSID && isPW) {
+                        result2 = createWifi2(ssid, password);
+                        result5 = createOnly5CH(ssid5, pw5, ch5);
+                    } else if (isSSID) {
+                        result2 = createSSID2(ssid);
+                        result5 = createOnlySSID5CH(ssid5, ch5);
+                    } else {
+                        result2 = createPW2(password);
+                        result5 = createPW5CH(pw5, ch5);
                     }
                 } else {
                     if (isSSID && isPW) {
@@ -312,31 +400,73 @@ function createJSON() {
         } else {
                 let result2;
                 let result5;
-                if (isCH) {
-                    if (isSSID && isPW) {
-                        result2 = createWifi2CH(ssid, password, ch);
-                        result5 = createWifi5(ssid, password);
-                    } else if (isSSID) {
-                        result2 = createSSID2CH(ssid, ch)
-                        result5 = createSSID5(ssid)
-                    } else if (isPW){
-                        result2 = createPW2CH(password, ch)
-                        result5 = createPW5(password)
+                if (isCH2 && !(isSSID || isPW)) {
+                    if (isCH5) {
+                        result2 = createCH(ch2);
+                        result5 = createCH5(ch5)
+                        document.getElementById("result2").setAttribute("value", result2);
+                        document.getElementById("result5").setAttribute("value", result5);
+                        return
                     } else {
-                        result2 = createCH(ch)
-                        result5 = "{}"
+                        result2 = createCH(ch2);
+                        document.getElementById("result2").setAttribute("value", result2);
+                        return;
                     }
-
+                } else if(isCH5 && !(isSSID || isPW)) {
+                    result5 = createCH5(ch5);
+                    document.getElementById("result5").setAttribute("value", result5);
+                    return;
+                } else if (isCH2) {
+                    if (isSSID && isPW) {
+                        if(isCH5) {
+                            result2 = createWifi2CH(ssid, password, ch2);
+                            result5 = createWifi5CH(ssid, password, ch5);
+                        } else {
+                            result2 = createWifi2CH(ssid, password, ch2);
+                            result5 = createWifi5(ssid, password);
+                        }
+                    } else if (isSSID) {
+                        if (isCH5) {
+                            result2 = createSSID2CH(ssid, ch2)
+                            result5 = createSSID5CH(ssid, ch5)
+                        } else {
+                            result2 = createSSID2CH(ssid, ch2)
+                            result5 = createSSID5(ssid)
+                        }
+                    } else if (isPW) {
+                        if (isCH5) {
+                            result2 = createPW2CH(password, ch2)
+                            result5 = createPW5CH(password, ch5)
+                        } else {
+                            result2 = createPW2CH(password, ch2)
+                            result5 = createPW5(password)
+                        }
+                    } 
                 } else {
                     if (isSSID && isPW) {
-                        result2 = createWifi2(ssid, password)
-                        result5 = createWifi5(ssid, password)
+                        if (isCH5) {
+                            result2 = createWifi2(ssid, password)
+                            result5 = createWifi5CH(ssid, password, ch5)
+                        } else {
+                            result2 = createWifi2(ssid, password)
+                            result5 = createWifi5(ssid, password)
+                        }
                     } else if (isSSID) {
-                        result2 = createSSID2(ssid)
-                        result5 = createSSID5(ssid)
+                        if (isCH5) {
+                            result2 = createSSID2(ssid)
+                            result5 = createSSID5CH(ssid, ch5)
+                        } else {
+                            result2 = createSSID2(ssid)
+                            result5 = createSSID5(ssid)
+                        }
                     } else if (isPW) {
-                        result2 = createPW2(password)
-                        result5 = createPW5(password)
+                        if (isCH5) {
+                            result2 = createPW2(password)
+                            result5 = createPW5CH(password, ch5)
+                        } else {
+                            result2 = createPW2(password)
+                            result5 = createPW5(password)
+                        }
                     } 
                 }
                 document.getElementById("result2").setAttribute("value", result2);
