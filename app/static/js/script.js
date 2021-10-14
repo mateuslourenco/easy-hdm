@@ -9,6 +9,7 @@ function createInputSSID5G(parent, child) {
     if(!isSSID) {
         ssid5.setAttribute("disabled", "disabled");
     }
+    ssid5.setAttribute("class", "mb-1")
     parent.insertBefore(ssid5, child)
 }
 function createInputPassword5G(parent, child) {
@@ -22,6 +23,7 @@ function createInputPassword5G(parent, child) {
     if(!isPW) {
         pw5.setAttribute("disabled", "disabled");
     }
+    pw5.setAttribute("class", "mb-1")
     parent.insertBefore(pw5, child)
 }
 function removeInput5G(parent) {
