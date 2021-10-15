@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request
+from flask import render_template
 
 
 @app.route("/inicio")
@@ -26,3 +26,8 @@ def portas():
 @app.route("/sip")
 def sip():
     return render_template('sip.html')
+
+
+@app.route("/<string:pagina>")
+def error(pagina):
+    return f'<h1>A pagina ({pagina}) não foi localizada</h1>'
